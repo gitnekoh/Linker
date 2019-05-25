@@ -4,20 +4,17 @@ import lombok.Getter;
 import me.nekoh.core.util.ConsoleUtil;
 import me.nekoh.linker.command.LinkerCommand;
 import me.nekoh.linker.config.LinkerConfig;
-import me.nekoh.linker.jedis.PubSubListener;
+import me.nekoh.linker.jedis.LinkerJedis;
+import me.nekoh.linker.jedis.UpdateTask;
 import org.bukkit.plugin.java.JavaPlugin;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 @Getter
 public final class Linker extends JavaPlugin {
 
     @Getter
     private static Linker instance;
-    private JedisPool jedisPool;
-    private PubSubListener pubSubListener;
+    private LinkerJedis linkerJedis;
     private LinkerConfig linkerConfig;
-    private Thread thread;
 
     @Override
     public void onEnable() {
@@ -25,12 +22,10 @@ public final class Linker extends JavaPlugin {
         instance.saveDefaultConfig();
         instance.getCommand("sync").setExecutor(new LinkerCommand());
 
-        this.jedisPool = new JedisPool(new JedisPoolConfig(), "localhost", 6379, 1000);
-        this.pubSubListener = new PubSubListener(jedisPool);
+        this.linkerJedis = new LinkerJedis();
         this.linkerConfig = new LinkerConfig();
-
-        (this.thread = new Thread(this.pubSubListener)).start();
-
+        this.linkerJedis = new LinkerJedis();
+        new UpdateTask().runTaskTimerAsynchronously(this, 20 * 1, 0);
         ConsoleUtil.printMessage("================================================================");
         ConsoleUtil.printMessage("&aLoaded Linker.");
         ConsoleUtil.printMessage("================================================================");
@@ -38,9 +33,7 @@ public final class Linker extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.jedisPool.close();
-        this.thread.stop();
-
+        this.linkerJedis.getJedisPool().destroy();
         ConsoleUtil.printMessage("================================================================");
         ConsoleUtil.printMessage("&aUnloaded Linker.");
         ConsoleUtil.printMessage("================================================================");

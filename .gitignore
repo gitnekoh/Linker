@@ -52,3 +52,13 @@ src/main/java/me/nekoh/linker/command/LinkerCommand.java
 target/classes/plugin.yml
 .idea/vcs.xml
 .idea/workspace.xml
+target/classes/me/nekoh/linker/util/UUIDUtil.class
+target/classes/me/nekoh/linker/jedis/UpdateTask.class
+target/classes/me/nekoh/linker/jedis/LinkerJedis.class
+target/classes/me/nekoh/linker/jedis/LinkerJedis$LinkerSubscriber.class
+target/classes/me/nekoh/linker/jedis/LinkerJedis$LinkerSubscriber$1.class
+target/classes/me/nekoh/linker/jedis/LinkerJedis$1.class
+.idea/workspace.xml
+Linker.iml
+.idea/workspace.xml
+Linker.iml
