@@ -23,7 +23,6 @@ public class PubSubListener extends JedisPubSub implements Runnable {
             );
             serverInfo.setPlayerAmount(Bukkit.getOnlinePlayers().size());
             jedisPool.getResource().publish("server-info", gson.toJson(serverInfo));
-            jedisPool.getResource().close();
         } else {
             ServerInfo serverInfo = gson.fromJson(message, ServerInfo.class);
             ServerInfo.getServerList().putIfAbsent(serverInfo.getName(), serverInfo);

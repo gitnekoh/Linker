@@ -1,7 +1,0 @@
-name: Linker
-version: 1.0-SNAPSHOT
-main: me.nekoh.linker.Linker
-depend:
-  - Core
-commands:
-  sync:

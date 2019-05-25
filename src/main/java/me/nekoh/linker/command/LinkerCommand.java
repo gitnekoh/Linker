@@ -20,7 +20,6 @@ public class LinkerCommand implements CommandExecutor {
         Bukkit.getScheduler().runTaskAsynchronously(Linker.getInstance(), () -> {
             JedisPool jedisPool = Linker.getInstance().getJedisPool();
             jedisPool.getResource().publish("server-info", "GET");
-            jedisPool.getResource().close();
             Bukkit.getScheduler().runTask(Linker.getInstance(), () -> {
                 sender.sendMessage(CC.translate("&aLinked servers list:"));
                 int x = 0;
