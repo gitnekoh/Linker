@@ -1,0 +1,7 @@
+name: Linker
+version: ${project.version}
+main: me.nekoh.linker.Linker
+depend:
+  - Core
+commands:
+  sync:
